@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: #ecf0f1;
+}
+
+.clock-container {
+  text-align: center;
+}
+
+.clock-container .clock {
+  font-size: 5rem;
+}
+
+.calender {
+  width: 90vw;
+  margin: 0 auto;
+  border: 1px solid black;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+col {
+  width: 14%;
+}
+
+.calender-body tr {
+  height: 100px;
+}
+
+.calender td {
+  border: 1px solid black;
+}
