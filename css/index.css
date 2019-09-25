@@ -26,11 +26,12 @@ body {
 }
 
 .calender {
-  width: 90vw;
+  width: 90%;
   margin: 0 auto;
   border: 1px solid black;
   text-align: center;
   border-collapse: collapse;
+  background-color: white;
 }
 
 col {
@@ -43,4 +44,49 @@ col {
 
 .calender td {
   border: 1px solid black;
+}
+
+.calender-head tr > td:first-child,
+.calender-head tr > td:last-child {
+  background-color: tomato;
+}
+.calender-nav {
+  display: flex;
+  height: 20px;
+  line-height: 20px;
+  margin: 5px 5%;
+}
+
+.calender-nav > button {
+  outline: none;
+  border: none;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  width: 5%;
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+.date-text {
+  display: block;
+  width: 80%;
+  text-align: center;
+  display: inline;
+
+  font-size: 20px;
+}
+
+.calender-nav .dec-button,
+.calender-nav .month-button {
+  border-right: 1px solid #ecf0f1;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+.text-gray {
+  color: #95a5a6;
 }

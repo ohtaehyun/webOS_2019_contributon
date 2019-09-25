@@ -116,14 +116,22 @@ function drawCalender() {
   const calenderCells = document.querySelectorAll(".calender-body td");
 
   for (let index = 0; index < calenderCells.length; index++) {
+    const p = document.createElement("p");
+    calenderCells[index].innerHTML = "";
     if (index < monthStart) {
-      calenderCells[index].textContent =
-        lastMonthDays - (monthStart - index) + 1;
+      p.classList.add("text-gray");
+      p.textContent = lastMonthDays - (monthStart - index) + 1;
+      calenderCells[index].appendChild(p);
     } else if (monthStart + thisMonthDays <= index) {
-      calenderCells[index].textContent =
-        index - (monthStart + thisMonthDays) + 1;
+      p.classList.add("text-gray");
+      p.textContent = index - (monthStart + thisMonthDays) + 1;
+      calenderCells[index].appendChild(p);
     } else {
-      calenderCells[index].textContent = index - monthStart + 1;
+      p.textContent = index - monthStart + 1;
+      calenderCells[index].appendChild(p);
+      div = document.createElement("div");
+      div.textContent = "Something To do";
+      calenderCells[index].appendChild(div);
     }
   }
 }
