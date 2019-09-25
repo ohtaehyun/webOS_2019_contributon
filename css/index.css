@@ -97,3 +97,9 @@ button:active {
 .text-white {
   color: #ecf0f1;
 }
+
+.calendar-body td {
+  vertical-align: top;
+  text-align: left;
+  padding: 5px;
+}
