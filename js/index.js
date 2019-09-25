@@ -1,8 +1,8 @@
-const calender = document.querySelector(".calender");
+const calendar = document.querySelector(".calendar");
 const colGroup = document.querySelector(".col-group");
-const calenderHead = document.querySelector(".calender-head");
-const calenderBody = document.querySelector(".calender-body");
-const calenderRows = document.querySelectorAll(".calender-body tr");
+const calendarHead = document.querySelector(".calendar-head");
+const calendarBody = document.querySelector(".calendar-body");
+const calendarRows = document.querySelectorAll(".calendar-body tr");
 const decButton = document.querySelector(".dec-button");
 const incButton = document.querySelector(".inc-button");
 const dateText = document.querySelector(".date-text");
@@ -15,7 +15,7 @@ const dayInfo = [];
 const ZELLER_DAY = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
 const ZELLER_MONTH = [13, 14, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-let IS_CALENDER_EXTEND = false;
+let IS_calendar_EXTEND = false;
 
 function initDayInfo() {
   var d = new Date();
@@ -89,32 +89,32 @@ function getMonthDays(month) {
   }
 }
 
-function calenderExtend(thisMonthDays, monthStart) {
+function calendarExtend(thisMonthDays, monthStart) {
   if (
     thisMonthDays - (7 - monthStart) - 28 > 0 &&
-    IS_CALENDER_EXTEND == false
+    IS_calendar_EXTEND == false
   ) {
-    IS_CALENDER_EXTEND = true;
-    if (calenderBody.childNodes.length == 6) {
+    IS_calendar_EXTEND = true;
+    if (calendarBody.childNodes.length == 6) {
       return;
     }
     tr = document.createElement("tr");
     for (let index = 0; index < 7; index++) {
       tr.appendChild(document.createElement("td"));
     }
-    calenderBody.appendChild(tr);
+    calendarBody.appendChild(tr);
   } else if (
     thisMonthDays - (7 - monthStart) - 28 < 0 &&
-    IS_CALENDER_EXTEND == true
+    IS_calendar_EXTEND == true
   ) {
-    IS_CALENDER_EXTEND = false;
-    if (calenderBody.childNodes.length == 5) {
+    IS_calendar_EXTEND = false;
+    if (calendarBody.childNodes.length == 5) {
       return;
     }
-    calenderBody.removeChild(calenderBody.lastChild);
+    calendarBody.removeChild(calendarBody.lastChild);
   }
 }
-function drawWeekCalender() {
+function drawWeekcalendar() {
   console.log(dayInfo);
   const dayOfWeek = getDayOfWeek();
   const month = dayInfo[1];
@@ -129,9 +129,9 @@ function drawWeekCalender() {
     lastMonthDays = getMonthDays(month - 1);
   }
 
-  const calenderCells = document.querySelectorAll(".calender-body td");
-  for (let index = 0; index < calenderCells.length; index++) {
-    calenderCells[index].innerHTML = "";
+  const calendarCells = document.querySelectorAll(".calendar-body td");
+  for (let index = 0; index < calendarCells.length; index++) {
+    calendarCells[index].innerHTML = "";
     p = document.createElement("p");
     if (startWeek < 1) {
       p.textContent = lastMonthDays + startWeek;
@@ -163,12 +163,12 @@ function drawWeekCalender() {
       p.textContent = startWeek;
       p.setAttribute("id", dayInfo[0] + "-" + (month + 1) + "-" + startWeek);
     }
-    calenderCells[index].appendChild(p);
+    calendarCells[index].appendChild(p);
     startWeek++;
   }
 }
 
-function drawMonthCalender() {
+function drawMonthcalendar() {
   console.log(dayInfo);
   firstDay = getFirstDay();
   const monthStart = dayList.indexOf(firstDay);
@@ -176,26 +176,26 @@ function drawMonthCalender() {
 
   const thisMonthDays = getMonthDays(month);
   const lastMonthDays = getMonthDays(month - 1);
-  calenderExtend(thisMonthDays, monthStart);
-  const calenderCells = document.querySelectorAll(".calender-body td");
+  calendarExtend(thisMonthDays, monthStart);
+  const calendarCells = document.querySelectorAll(".calendar-body td");
 
-  for (let index = 0; index < calenderCells.length; index++) {
+  for (let index = 0; index < calendarCells.length; index++) {
     const p = document.createElement("p");
-    calenderCells[index].innerHTML = "";
+    calendarCells[index].innerHTML = "";
     if (index < monthStart) {
       p.classList.add("text-gray");
       p.textContent = lastMonthDays - (monthStart - index) + 1;
-      calenderCells[index].appendChild(p);
+      calendarCells[index].appendChild(p);
     } else if (monthStart + thisMonthDays <= index) {
       p.classList.add("text-gray");
       p.textContent = index - (monthStart + thisMonthDays) + 1;
-      calenderCells[index].appendChild(p);
+      calendarCells[index].appendChild(p);
     } else {
       p.textContent = index - monthStart + 1;
-      calenderCells[index].appendChild(p);
+      calendarCells[index].appendChild(p);
       div = document.createElement("div");
       div.textContent = "Something To do";
-      calenderCells[index].appendChild(div);
+      calendarCells[index].appendChild(div);
     }
   }
 }
@@ -214,7 +214,7 @@ function increaseMonth() {
   }
   dayInfo[1] = nextMonth;
 
-  drawMonthCalender();
+  drawMonthcalendar();
   setDateText("month");
 }
 
@@ -231,13 +231,13 @@ function decreaseMonth() {
     nextMonth = month - 1;
   }
   dayInfo[1] = nextMonth;
-  drawMonthCalender();
+  drawMonthcalendar();
   setDateText("month");
 }
-function setDateText(calenderType) {
-  if (calenderType === "month") {
+function setDateText(calendarType) {
+  if (calendarType === "month") {
     dateText.innerHTML = dayInfo[0] + "-" + (dayInfo[1] + 1);
-  } else if (calenderType === "week") {
+  } else if (calendarType === "week") {
     const dayOfWeek = getDayOfWeek();
     const month = dayInfo[1];
     const standardDay = dayInfo[2];
@@ -248,22 +248,22 @@ function setDateText(calenderType) {
   }
 }
 
-function initMonthCalender() {
+function initMonthcalendar() {
   dayInfo[2] = 1;
   incButton.removeEventListener("click", increaseWeek);
   decButton.removeEventListener("click", decreaseWeek);
   incButton.addEventListener("click", increaseMonth);
   decButton.addEventListener("click", decreaseMonth);
-  calenderBody.innerHTML = "";
+  calendarBody.innerHTML = "";
   for (let index = 0; index < 5; index++) {
     tr = document.createElement("tr");
     for (let index = 0; index < 7; index++) {
       td = document.createElement("td");
       tr.appendChild(td);
     }
-    calenderBody.appendChild(tr);
+    calendarBody.appendChild(tr);
   }
-  drawMonthCalender();
+  drawMonthcalendar();
   setDateText("month");
 }
 
@@ -284,7 +284,7 @@ function increaseWeek() {
   } else {
     dayInfo[2] = day + 7;
   }
-  drawWeekCalender();
+  drawWeekcalendar();
   setDateText("week");
 }
 function decreaseWeek() {
@@ -304,36 +304,36 @@ function decreaseWeek() {
   } else {
     dayInfo[2] = day - 7;
   }
-  drawWeekCalender();
+  drawWeekcalendar();
   setDateText("week");
 }
 
 function setDayInfoToMonday() {}
 
-function initWeekCalender() {
+function initWeekcalendar() {
   // setDayInfoToMonday();
   dayInfo[2] = 1;
   incButton.removeEventListener("click", increaseMonth);
   decButton.removeEventListener("click", decreaseMonth);
   incButton.addEventListener("click", increaseWeek);
   decButton.addEventListener("click", decreaseWeek);
-  calenderBody.innerHTML = "";
+  calendarBody.innerHTML = "";
   tr = document.createElement("tr");
   for (let index = 0; index < 7; index++) {
     td = document.createElement("td");
     tr.appendChild(td);
   }
-  calenderBody.appendChild(tr);
-  drawWeekCalender();
+  calendarBody.appendChild(tr);
+  drawWeekcalendar();
 }
 
 function init() {
   initDayInfo();
-  initMonthCalender();
-  drawMonthCalender();
+  initMonthcalendar();
+  drawMonthcalendar();
   setDateText();
-  monthButton.addEventListener("click", initMonthCalender);
-  weekButton.addEventListener("click", initWeekCalender);
+  monthButton.addEventListener("click", initMonthcalendar);
+  weekButton.addEventListener("click", initWeekcalendar);
 }
 
 init();
