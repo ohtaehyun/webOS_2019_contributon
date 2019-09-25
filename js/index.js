@@ -31,7 +31,6 @@ function getDayOfWeek() {
   let year;
   const month = dayInfo[1];
   const day = dayInfo[2];
-  console.log(month);
   // Zeller's congurence rule
   if (month < 2) {
     year = dayInfo[0] - 1;
@@ -115,13 +114,10 @@ function calendarExtend(thisMonthDays, monthStart) {
   }
 }
 function drawWeekcalendar() {
-  console.log(dayInfo);
   const dayOfWeek = getDayOfWeek();
   const month = dayInfo[1];
   const standardDay = dayInfo[2];
-  console.log(dayOfWeek);
   const idx = dayList.indexOf(dayOfWeek);
-  console.log("idx:", idx);
   let startWeek = standardDay - idx;
   let lastMonthDays;
   const thisMonthDays = getMonthDays(month);
@@ -136,12 +132,12 @@ function drawWeekcalendar() {
     if (startWeek < 1) {
       p.textContent = lastMonthDays + startWeek;
       if (month === 0) {
-        p.setAttribute(
+        calendarCells[index].setAttribute(
           "id",
           dayInfo[0] - 1 + "-" + 12 + "-" + (lastMonthDays + startWeek)
         );
       } else {
-        p.setAttribute(
+        calendarCells[index].setAttribute(
           "id",
           dayInfo[0] + "-" + month + "-" + (lastMonthDays + startWeek)
         );
@@ -149,19 +145,22 @@ function drawWeekcalendar() {
     } else if (startWeek > thisMonthDays) {
       p.textContent = startWeek - thisMonthDays;
       if (month === 11) {
-        p.setAttribute(
+        calendarCells[index].setAttribute(
           "id",
           dayInfo[0] + 1 + "-" + 1 + "-" + (startWeek - thisMonthDays)
         );
       } else {
-        p.setAttribute(
+        calendarCells[index].setAttribute(
           "id",
           dayInfo[0] + "-" + (month + 2) + "-" + (startWeek - thisMonthDays)
         );
       }
     } else {
       p.textContent = startWeek;
-      p.setAttribute("id", dayInfo[0] + "-" + (month + 1) + "-" + startWeek);
+      calendarCells[index].setAttribute(
+        "id",
+        dayInfo[0] + "-" + (month + 1) + "-" + startWeek
+      );
     }
     calendarCells[index].appendChild(p);
     startWeek++;
@@ -169,7 +168,6 @@ function drawWeekcalendar() {
 }
 
 function drawMonthcalendar() {
-  console.log(dayInfo);
   firstDay = getFirstDay();
   const monthStart = dayList.indexOf(firstDay);
   const month = dayInfo[1];
@@ -238,13 +236,11 @@ function setDateText(calendarType) {
   if (calendarType === "month") {
     dateText.innerHTML = dayInfo[0] + "-" + (dayInfo[1] + 1);
   } else if (calendarType === "week") {
-    const dayOfWeek = getDayOfWeek();
-    const month = dayInfo[1];
-    const standardDay = dayInfo[2];
-    const idx = dayList.indexOf(dayOfWeek);
-    let startWeek = standardDay - idx;
-    let lastMonthDays;
-    const thisMonthDays = getMonthDays(month);
+    const calendarCells = document.querySelectorAll(".calendar-body td");
+    dateText.innerHTML =
+      calendarCells[0].getAttribute("id") +
+      "~" +
+      calendarCells[6].getAttribute("id");
   }
 }
 
@@ -325,13 +321,12 @@ function initWeekcalendar() {
   }
   calendarBody.appendChild(tr);
   drawWeekcalendar();
+  setDateText("week");
 }
 
 function init() {
   initDayInfo();
   initMonthcalendar();
-  drawMonthcalendar();
-  setDateText();
   monthButton.addEventListener("click", initMonthcalendar);
   weekButton.addEventListener("click", initWeekcalendar);
 }
