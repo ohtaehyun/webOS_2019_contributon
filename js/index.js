@@ -15,12 +15,12 @@ const dayInfo = [];
 const ZELLER_DAY = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
 const ZELLER_MONTH = [13, 14, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-let IS_calendar_EXTEND = false;
+let IS_CALENDAR_EXTEND = false;
 
 function initDayInfo() {
   var d = new Date();
   var date = d.getDate();
-  var month = d.getMonth(); // Since getMonth() returns month from 0-11 not 1-12.
+  var month = d.getMonth(); // getMonth() returns month from 0-11 not 1-12.
   var year = d.getFullYear();
   dayInfo.push(year);
   dayInfo.push(month);
@@ -91,9 +91,9 @@ function getMonthDays(month) {
 function calendarExtend(thisMonthDays, monthStart) {
   if (
     thisMonthDays - (7 - monthStart) - 28 > 0 &&
-    IS_calendar_EXTEND == false
+    IS_CALENDAR_EXTEND == false
   ) {
-    IS_calendar_EXTEND = true;
+    IS_CALENDAR_EXTEND = true;
     if (calendarBody.childNodes.length == 6) {
       return;
     }
@@ -104,9 +104,9 @@ function calendarExtend(thisMonthDays, monthStart) {
     calendarBody.appendChild(tr);
   } else if (
     thisMonthDays - (7 - monthStart) - 28 < 0 &&
-    IS_calendar_EXTEND == true
+    IS_CALENDAR_EXTEND == true
   ) {
-    IS_calendar_EXTEND = false;
+    IS_CALENDAR_EXTEND = false;
     if (calendarBody.childNodes.length == 5) {
       return;
     }
@@ -290,7 +290,7 @@ function decreaseWeek() {
   const lastMonthDays = getMonthDays(month - 1);
 
   if (month === 0 && day - 7 < 1) {
-    // 연도가 늘어남
+    // 연도가 줄어듬
     dayInfo[0] = year - 1;
     dayInfo[1] = 11;
     dayInfo[2] = day - 7 + lastMonthDays;
